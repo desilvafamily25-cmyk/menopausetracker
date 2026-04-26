@@ -44,8 +44,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  // Require payment for paid routes
-  if (user && PAID_ROUTES.some((r) => pathname.startsWith(r))) {
+  // Require payment for paid routes — only enforced when Stripe is configured
+  if (user && process.env.STRIPE_SECRET_KEY && PAID_ROUTES.some((r) => pathname.startsWith(r))) {
     const { data: profile } = await supabase
       .from('users')
       .select('has_paid, subscription_status')

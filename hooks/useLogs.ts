@@ -100,9 +100,9 @@ export function useLogs() {
     await fetchLogs();
   }
 
-  function getLogForDate(date: string) {
+  const getLogForDate = useCallback((date: string) => {
     return logs.find((l) => l.log_date === date) ?? null;
-  }
+  }, [logs]);
 
   const todayLog = getLogForDate(today());
 
