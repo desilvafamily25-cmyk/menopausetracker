@@ -37,6 +37,38 @@ import {
   Minus,
   PartyPopper,
 } from "lucide-react";
+// DashboardHero uses font-display (DM Serif Display) loaded via globals.css
+
+const STAT_THEMES = {
+  coral: {
+    card: "linear-gradient(145deg, #FDF3F1 0%, #FBF0EE 100%)",
+    border: "rgba(212,103,90,0.15)",
+    icon: "linear-gradient(135deg, #D4675A 0%, #C05548 100%)",
+    value: "#B84035",
+    label: "#C05548",
+  },
+  teal: {
+    card: "linear-gradient(145deg, #EDF5F2 0%, #E8F2EF 100%)",
+    border: "rgba(61,107,91,0.15)",
+    icon: "linear-gradient(135deg, #3D6B5B 0%, #2E5446 100%)",
+    value: "#2E5446",
+    label: "#3D6B5B",
+  },
+  amber: {
+    card: "linear-gradient(145deg, #FEF9EE 0%, #FDF5E4 100%)",
+    border: "rgba(217,119,6,0.15)",
+    icon: "linear-gradient(135deg, #D97706 0%, #B45309 100%)",
+    value: "#92400E",
+    label: "#B45309",
+  },
+  purple: {
+    card: "linear-gradient(145deg, #F0EEF8 0%, #ECEAF6 100%)",
+    border: "rgba(27,26,68,0.12)",
+    icon: "linear-gradient(135deg, #1B1A44 0%, #2D2C6E 100%)",
+    value: "#1B1A44",
+    label: "#3D3C7A",
+  },
+};
 
 function StatCard({
   icon: Icon,
@@ -51,24 +83,62 @@ function StatCard({
   sub?: string;
   color?: "purple" | "teal" | "coral" | "amber";
 }) {
-  const colors = {
-    purple: "bg-primary-50 text-primary-500",
-    teal: "bg-teal-50 text-teal-500",
-    coral: "bg-coral-50 text-coral-500",
-    amber: "bg-amber-50 text-amber-500",
-  };
-
+  const t = STAT_THEMES[color];
   return (
-    <Card className="flex flex-col gap-3">
-      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${colors[color]}`}>
-        <Icon className="w-5 h-5" />
+    <div
+      className="rounded-2xl p-5 flex flex-col gap-3"
+      style={{ background: t.card, border: `1px solid ${t.border}`, boxShadow: "0 1px 3px rgba(15,14,34,0.04), 0 4px 16px rgba(15,14,34,0.05)" }}
+    >
+      <div
+        className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+        style={{ background: t.icon }}
+      >
+        <Icon className="w-4 h-4 text-white" />
       </div>
       <div>
-        <p className="text-2xl font-bold text-[#1B1A44]">{value}</p>
-        <p className="text-xs text-gray-500 mt-0.5">{label}</p>
-        {sub && <p className="text-xs text-gray-400 mt-0.5">{sub}</p>}
+        <p className="text-2xl font-bold" style={{ color: t.value }}>{value}</p>
+        <p className="text-xs font-semibold mt-0.5" style={{ color: t.label }}>{label}</p>
+        {sub && <p className="text-[11px] mt-0.5 opacity-70" style={{ color: t.label }}>{sub}</p>}
       </div>
-    </Card>
+    </div>
+  );
+}
+
+function DashboardHero({ name, streak }: { name?: string; streak: number }) {
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+  const timeEmoji = hour < 12 ? "🌅" : hour < 17 ? "☀️" : "🌙";
+  const firstName = name?.split(" ")[0];
+
+  return (
+    <div
+      className="relative overflow-hidden rounded-3xl px-6 py-7"
+      style={{ background: "linear-gradient(135deg, #1B1A44 0%, #2A2860 50%, #1E3D35 100%)" }}
+    >
+      {/* Organic blob shapes */}
+      <div className="absolute -top-12 -right-12 w-56 h-56 rounded-full pointer-events-none"
+           style={{ background: "radial-gradient(circle, rgba(61,107,91,0.35) 0%, transparent 70%)" }} />
+      <div className="absolute -bottom-16 -left-10 w-64 h-64 rounded-full pointer-events-none"
+           style={{ background: "radial-gradient(circle, rgba(138,158,151,0.20) 0%, transparent 70%)" }} />
+      <div className="absolute top-4 right-24 w-32 h-32 rounded-full pointer-events-none"
+           style={{ background: "radial-gradient(circle, rgba(212,103,90,0.12) 0%, transparent 70%)" }} />
+
+      <div className="relative z-10">
+        <p className="text-white/55 text-xs font-semibold uppercase tracking-widest mb-2">
+          {timeEmoji} &nbsp;{formatDate(today(), "EEEE, d MMMM yyyy")}
+        </p>
+        <h1 className="font-display text-3xl md:text-4xl text-white">
+          {greeting}{firstName ? `, ${firstName}` : ""}
+        </h1>
+        <p className="text-white/65 text-sm mt-2 font-medium">
+          {streak >= 7
+            ? `${streak}-day streak 🔥 You're on a roll!`
+            : streak > 0
+            ? `${streak}-day streak — keep going 💪`
+            : "Start your tracking journey today ✨"}
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -124,38 +194,36 @@ function DashboardContent() {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      {/* Welcome banner */}
+      {/* Hero greeting */}
+      <DashboardHero name={user?.full_name ?? undefined} streak={streak} />
+
+      {/* Welcome banner (after signup) */}
       {showWelcome && (
-        <div className="bg-gradient-to-r from-primary-500 to-teal-500 rounded-2xl p-5 text-white flex items-center gap-4">
-          <PartyPopper className="w-8 h-8 flex-shrink-0" />
-          <div>
-            <p className="font-semibold text-lg">Welcome to your tracker!</p>
-            <p className="text-primary-100 text-sm">
-              Start by logging today&apos;s symptoms. 30 days of data is all you need for a great doctor report.
-            </p>
-          </div>
-          <button onClick={() => setShowWelcome(false)} className="ml-auto text-white/70 hover:text-white text-xl leading-none">
-            ✕
-          </button>
+        <div className="rounded-2xl p-4 flex items-center gap-3"
+             style={{ background: "linear-gradient(135deg, #EBF2EF 0%, #E5F0EC 100%)", border: "1px solid rgba(61,107,91,0.2)" }}>
+          <PartyPopper className="w-5 h-5 text-teal-600 flex-shrink-0" />
+          <p className="text-sm font-semibold text-teal-800 flex-1">
+            Welcome! Log your first symptoms — 30 days of data generates a powerful doctor report.
+          </p>
+          <button onClick={() => setShowWelcome(false)} className="text-teal-500 hover:text-teal-700 text-lg leading-none flex-shrink-0">✕</button>
         </div>
       )}
 
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="page-header">
-            {user?.full_name ? `Hi, ${user.full_name.split(" ")[0]} 👋` : "Dashboard"}
-          </h1>
-          <p className="page-sub">{formatDate(today(), "EEEE, d MMMM yyyy")}</p>
-        </div>
-        {!hasTodayLog && (
+      {/* Log today CTA — only when not logged */}
+      {!hasTodayLog && logs.length > 0 && (
+        <div className="flex items-center justify-between bg-white/70 backdrop-blur-sm rounded-2xl px-4 py-3"
+             style={{ border: "1px solid rgba(27,26,68,0.08)" }}>
+          <div className="flex items-center gap-2.5">
+            <Calendar className="w-4 h-4 text-primary-500" />
+            <p className="text-sm font-semibold text-primary-700">Today&apos;s log not done yet</p>
+          </div>
           <Link href="/log">
-            <Button size="sm" className="gap-2">
-              Log Today <ArrowRight className="w-4 h-4" />
+            <Button size="sm" className="gap-1.5 text-xs">
+              Log now <ArrowRight className="w-3.5 h-3.5" />
             </Button>
           </Link>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Milestone celebration */}
       <MilestoneCard logs={logs} />

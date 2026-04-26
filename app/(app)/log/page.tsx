@@ -46,6 +46,12 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
+const SLIDER_FILL = {
+  coral:  { fill: "#D4675A", thumb: "#D4675A", badge: "bg-coral-50 text-coral-700" },
+  teal:   { fill: "#3D6B5B", thumb: "#3D6B5B", badge: "bg-teal-50 text-teal-700" },
+  purple: { fill: "#1B1A44", thumb: "#1B1A44", badge: "bg-primary-50 text-primary-700" },
+};
+
 function RangeSlider({
   label,
   min,
@@ -63,20 +69,17 @@ function RangeSlider({
   icon?: React.ElementType;
   color?: "purple" | "teal" | "coral";
 }) {
-  const colors = {
-    purple: "accent-primary-500",
-    teal: "accent-teal-500",
-    coral: "accent-coral-500",
-  };
+  const pct = Math.round(((value - min) / (max - min)) * 100);
+  const { fill, badge } = SLIDER_FILL[color];
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center justify-between mb-3">
         <label className="label flex items-center gap-1.5 mb-0">
           {Icon && <Icon className="w-4 h-4" />}
           {label}
         </label>
-        <span className="text-sm font-semibold text-primary-600 bg-primary-50 px-2.5 py-0.5 rounded-full">
+        <span className={`text-sm font-bold px-2.5 py-0.5 rounded-full ${badge}`}>
           {value}
         </span>
       </div>
@@ -86,9 +89,14 @@ function RangeSlider({
         max={max}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className={`w-full h-2 rounded-full bg-gray-200 appearance-none cursor-pointer ${colors[color]}`}
+        className={`w-full rounded-full appearance-none cursor-pointer accent-${color === "coral" ? "coral" : color === "teal" ? "teal" : "primary"}-500`}
+        style={{
+          height: "6px",
+          background: `linear-gradient(to right, ${fill} ${pct}%, #e9e7e0 ${pct}%)`,
+          outline: "none",
+        }}
       />
-      <div className="flex justify-between text-xs text-gray-400 mt-1">
+      <div className="flex justify-between text-[11px] text-gray-400 mt-1.5 font-medium">
         <span>{min}</span>
         <span>{max}</span>
       </div>

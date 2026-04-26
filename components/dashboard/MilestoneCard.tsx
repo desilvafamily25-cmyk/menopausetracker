@@ -19,8 +19,8 @@ export default function MilestoneCard({ logs }: { logs: DailyLog[] }) {
          style={{ background: "linear-gradient(135deg, #E8F7F3 0%, #D1F0E8 100%)", border: "1px solid rgba(61,107,91,0.2)" }}>
       <span className="text-3xl flex-shrink-0">{emoji}</span>
       <div className="flex-1 min-w-0">
-        <p className="text-xs font-bold text-teal-800 uppercase tracking-wide">{milestone.days}-Day Milestone</p>
-        <p className="text-sm font-semibold text-teal-900 mt-0.5">{milestone.message}</p>
+        <p className="text-xs font-bold text-teal-700 uppercase tracking-widest">{milestone.days}-Day Milestone</p>
+        <p className="font-display text-lg text-teal-900 mt-0.5 leading-snug">{milestone.message}</p>
       </div>
       <button onClick={() => setDismissed(true)} className="p-1.5 hover:bg-teal-200 rounded-lg transition-colors flex-shrink-0">
         <X className="w-4 h-4 text-teal-600" />

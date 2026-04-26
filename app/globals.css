@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -13,11 +13,12 @@
   --sage:       #8A9E97;
   --coral:      #D4675A;
 
-  /* Elevation shadows */
-  --shadow-xs:  0 1px 2px rgba(15,14,34,0.06);
-  --shadow-sm:  0 1px 3px rgba(15,14,34,0.06), 0 4px 12px rgba(15,14,34,0.07);
-  --shadow-md:  0 4px 6px rgba(15,14,34,0.05), 0 10px 28px rgba(15,14,34,0.10);
-  --shadow-lg:  0 8px 16px rgba(15,14,34,0.08), 0 24px 48px rgba(15,14,34,0.14);
+  /* Elevation shadows — warm-tinted */
+  --shadow-xs:  0 1px 2px rgba(15,14,34,0.05);
+  --shadow-sm:  0 1px 3px rgba(15,14,34,0.04), 0 4px 16px rgba(15,14,34,0.06);
+  --shadow-md:  0 4px 8px rgba(15,14,34,0.04), 0 12px 32px rgba(15,14,34,0.08);
+  --shadow-lg:  0 8px 20px rgba(15,14,34,0.06), 0 28px 56px rgba(15,14,34,0.12);
+  --shadow-warm: 0 2px 8px rgba(212,103,90,0.08), 0 8px 24px rgba(15,14,34,0.06);
 }
 
 .dark {
@@ -94,9 +95,10 @@
 
   /* ── Cards ── */
   .card {
-    @apply bg-white rounded-2xl p-6;
+    @apply rounded-2xl p-6;
+    background: #FFFDF9;
     box-shadow: var(--shadow-sm);
-    border: 1px solid rgba(15,14,34,0.06);
+    border: 1px solid rgba(15,14,34,0.055);
   }
 
   .card-hover {
@@ -104,7 +106,7 @@
   }
   .card-hover:hover {
     box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 
   /* ── Buttons ── */
@@ -190,10 +192,21 @@
 
   /* ── Bottom nav (mobile PWA) ── */
   .bottom-nav {
-    @apply fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md;
-    border-top: 1px solid rgba(15,14,34,0.08);
+    @apply fixed bottom-0 left-0 right-0 z-50;
+    background: rgba(255,253,249,0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(15,14,34,0.07);
     padding-bottom: env(safe-area-inset-bottom);
-    box-shadow: 0 -4px 24px rgba(15,14,34,0.08);
+    box-shadow: 0 -2px 20px rgba(15,14,34,0.07), 0 -1px 4px rgba(15,14,34,0.04);
+  }
+
+  /* ── Display font — for hero / emotional moments ── */
+  .font-display {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
   }
 }
 

@@ -151,27 +151,37 @@ export default function Navbar() {
 
       {/* ─── Mobile: bottom tab bar ─── */}
       <nav className="bottom-nav md:hidden">
-        <div className="flex items-stretch h-16">
+        <div className="flex items-stretch h-[62px]">
           {primaryTabs.map(({ href, label, icon: Icon }) => {
             const active = isActive(href);
             return (
               <Link
                 key={href}
                 href={href}
-                className="flex-1 flex flex-col items-center justify-center gap-0.5 transition-all duration-150 active:scale-95"
+                className="flex-1 flex flex-col items-center justify-center gap-0.5 transition-all duration-150 active:scale-95 relative"
               >
+                {/* Pill indicator */}
                 <div className={cn(
-                  "flex items-center justify-center w-10 h-6 rounded-full transition-all duration-200",
-                  active ? "bg-primary-100" : ""
+                  "flex items-center justify-center w-14 h-8 rounded-full transition-all duration-300",
+                  active
+                    ? "bg-primary-100 shadow-sm"
+                    : "bg-transparent"
                 )}>
-                  <Icon className={cn("w-5 h-5 transition-colors", active ? "text-primary-700" : "text-gray-500")} />
+                  <Icon className={cn(
+                    "w-[18px] h-[18px] transition-all duration-200",
+                    active ? "text-primary-700" : "text-gray-400"
+                  )} />
                 </div>
                 <span className={cn(
-                  "text-[10px] font-semibold leading-none transition-colors",
-                  active ? "text-primary-700" : "text-gray-500"
+                  "text-[10px] leading-none transition-all duration-200",
+                  active ? "text-primary-700 font-bold" : "text-gray-400 font-semibold"
                 )}>
                   {label}
                 </span>
+                {/* Active dot */}
+                {active && (
+                  <span className="absolute top-1 right-[calc(50%-14px)] w-1 h-1 rounded-full bg-teal-500" />
+                )}
               </Link>
             );
           })}
@@ -179,20 +189,26 @@ export default function Navbar() {
           {/* More button */}
           <button
             onClick={() => setMoreOpen(true)}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 transition-all duration-150 active:scale-95"
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 transition-all duration-150 active:scale-95 relative"
           >
             <div className={cn(
-              "flex items-center justify-center w-10 h-6 rounded-full transition-all duration-200",
-              isMoreActive ? "bg-primary-100" : ""
+              "flex items-center justify-center w-14 h-8 rounded-full transition-all duration-300",
+              isMoreActive ? "bg-primary-100 shadow-sm" : "bg-transparent"
             )}>
-              <Grid3x3 className={cn("w-5 h-5 transition-colors", isMoreActive ? "text-primary-700" : "text-gray-500")} />
+              <Grid3x3 className={cn(
+                "w-[18px] h-[18px] transition-all duration-200",
+                isMoreActive ? "text-primary-700" : "text-gray-400"
+              )} />
             </div>
             <span className={cn(
-              "text-[10px] font-semibold leading-none transition-colors",
-              isMoreActive ? "text-primary-700" : "text-gray-500"
+              "text-[10px] leading-none transition-all duration-200",
+              isMoreActive ? "text-primary-700 font-bold" : "text-gray-400 font-semibold"
             )}>
               More
             </span>
+            {isMoreActive && (
+              <span className="absolute top-1 right-[calc(50%-14px)] w-1 h-1 rounded-full bg-teal-500" />
+            )}
           </button>
         </div>
       </nav>

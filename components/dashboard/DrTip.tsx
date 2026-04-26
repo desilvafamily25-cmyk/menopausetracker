@@ -25,7 +25,7 @@ export default function DrTip() {
               {tip.category}
             </span>
           </div>
-          <p className="text-sm text-gray-800 leading-relaxed">&ldquo;{tip.tip}&rdquo;</p>
+          <p className="font-display text-base text-gray-800 leading-relaxed">&ldquo;{tip.tip}&rdquo;</p>
         </div>
       </div>
     </div>

@@ -91,6 +91,7 @@ const config: Config = {
       fontFamily: {
         sans: ["Inter", "Open Sans", "sans-serif"],
         heading: ["Poppins", "Inter", "sans-serif"],
+        display: ["DM Serif Display", "Georgia", "serif"],
       },
       animation: {
         "fade-in": "fadeIn 0.5s ease-in-out",
