@@ -16,25 +16,46 @@ import {
   Leaf,
   Settings,
   LogOut,
-  Menu,
+  Grid3x3,
   X,
 } from "lucide-react";
 
-const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/log", label: "Daily Log", icon: BookOpen },
-  { href: "/insights", label: "Insights", icon: BarChart2 },
-  { href: "/doctor-report", label: "Doctor Report", icon: FileText },
-  { href: "/treatments", label: "Treatments", icon: Pill },
+// Primary 5 tabs shown in bottom bar
+const primaryTabs = [
+  { href: "/dashboard",     label: "Home",     icon: LayoutDashboard },
+  { href: "/log",           label: "Log",      icon: BookOpen },
+  { href: "/insights",      label: "Insights", icon: BarChart2 },
+  { href: "/doctor-report", label: "Report",   icon: FileText },
+];
+
+// Secondary items in "More" sheet
+const moreItems = [
+  { href: "/treatments",  label: "Treatments",  icon: Pill },
   { href: "/supplements", label: "Supplements", icon: Leaf },
-  { href: "/settings", label: "Settings", icon: Settings },
+  { href: "/settings",    label: "Settings",    icon: Settings },
+];
+
+// Full sidebar items for desktop
+const sidebarItems = [
+  { href: "/dashboard",     label: "Dashboard",     icon: LayoutDashboard },
+  { href: "/log",           label: "Daily Log",     icon: BookOpen },
+  { href: "/insights",      label: "Insights",      icon: BarChart2 },
+  { href: "/doctor-report", label: "Doctor Report", icon: FileText },
+  { href: "/treatments",    label: "Treatments",    icon: Pill },
+  { href: "/supplements",   label: "Supplements",   icon: Leaf },
+  { href: "/settings",      label: "Settings",      icon: Settings },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
+
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(href + "/");
+
+  const isMoreActive = moreItems.some((i) => isActive(i.href));
 
   async function handleSignOut() {
     setSigningOut(true);
@@ -50,60 +71,61 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Desktop sidebar */}
-      <aside className="hidden md:flex flex-col fixed left-0 top-0 h-full w-64 bg-white border-r border-gray-100 z-30">
+      {/* ─── Desktop sidebar ─── */}
+      <aside className="hidden md:flex flex-col fixed left-0 top-0 h-full w-64 z-30"
+             style={{ background: "linear-gradient(180deg, #ffffff 0%, #faf9f7 100%)",
+                      borderRight: "1px solid rgba(15,14,34,0.07)",
+                      boxShadow: "2px 0 16px rgba(15,14,34,0.05)" }}>
         {/* Logo */}
-        <div className="px-6 py-4 border-b border-gray-100">
+        <div className="px-6 py-5" style={{ borderBottom: "1px solid rgba(15,14,34,0.07)" }}>
           <Link href="/dashboard" className="flex items-center gap-3">
-            <Image
-              src="/pausesleep-logo.png"
-              alt="Pause Sleep"
-              width={44}
-              height={44}
-              className="rounded-full flex-shrink-0"
-            />
+            <Image src="/pausesleep-logo.png" alt="Pause Sleep" width={46} height={46} className="rounded-full flex-shrink-0" style={{ boxShadow: "0 2px 8px rgba(27,26,68,0.18)" }} />
             <div>
-              <p className="font-semibold text-sm text-[#1B1A44]" style={{ fontFamily: "Poppins, sans-serif" }}>
+              <p className="font-bold text-sm text-[#0F0E22]" style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "-0.01em" }}>
                 Pause Sleep
               </p>
-              <p className="text-xs text-gray-400">Symptom Tracker</p>
+              <p className="text-xs text-gray-500 font-medium">Symptom Tracker</p>
             </div>
           </Link>
         </div>
 
         {/* Nav links */}
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          {navItems.map(({ href, label, icon: Icon }) => (
+        <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
+          {sidebarItems.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}
               href={href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150",
-                pathname === href || pathname.startsWith(href + "/")
-                  ? "bg-primary-50 text-primary-700"
+                "flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150",
+                isActive(href)
+                  ? "text-primary-700"
                   : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               )}
+              style={isActive(href) ? {
+                background: "linear-gradient(135deg, #EEEDF5, #E8F2EF)",
+                boxShadow: "inset 0 1px 2px rgba(27,26,68,0.06)"
+              } : {}}
             >
-              <Icon className="w-4 h-4 flex-shrink-0" />
+              <Icon className={cn("w-4 h-4 flex-shrink-0", isActive(href) ? "text-primary-600" : "text-gray-500")} />
               {label}
             </Link>
           ))}
         </nav>
 
         {/* Bottom */}
-        <div className="p-4 border-t border-gray-100 space-y-2">
+        <div className="p-3 space-y-0.5" style={{ borderTop: "1px solid rgba(15,14,34,0.07)" }}>
           <a
             href="https://www.pausesleep.com.au"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-3 py-2 text-xs text-gray-400 hover:text-primary-500 transition-colors"
+            className="flex items-center gap-2 px-3.5 py-2 text-xs text-gray-500 hover:text-primary-600 font-medium transition-colors rounded-xl hover:bg-primary-50"
           >
-            ← Back to Pause Sleep
+            ← pausesleep.com.au
           </a>
           <button
             onClick={handleSignOut}
             disabled={signingOut}
-            className="flex items-center gap-3 px-3 py-2.5 w-full rounded-xl text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all duration-150"
+            className="flex items-center gap-3 px-3.5 py-2.5 w-full rounded-xl text-sm font-semibold text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all duration-150"
           >
             <LogOut className="w-4 h-4" />
             {signingOut ? "Signing out…" : "Sign Out"}
@@ -111,68 +133,135 @@ export default function Navbar() {
         </div>
       </aside>
 
-      {/* Mobile top bar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-100 px-4 py-2.5 flex items-center justify-between">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <Image
-            src="/pausesleep-logo.png"
-            alt="Pause Sleep"
-            width={34}
-            height={34}
-            className="rounded-full"
-          />
-          <span className="font-semibold text-sm" style={{ fontFamily: "Poppins, sans-serif" }}>
-            Pause Sleep
+      {/* ─── Mobile: slim top bar ─── */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 glass"
+           style={{ borderBottom: "1px solid rgba(15,14,34,0.08)", paddingTop: "env(safe-area-inset-top)" }}>
+        <div className="flex items-center justify-between px-4 py-3">
+          <Link href="/dashboard" className="flex items-center gap-2.5">
+            <Image src="/pausesleep-logo.png" alt="Pause Sleep" width={32} height={32} className="rounded-full" style={{ boxShadow: "0 1px 6px rgba(27,26,68,0.18)" }} />
+            <span className="font-bold text-sm text-[#0F0E22]" style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "-0.01em" }}>
+              Pause Sleep
+            </span>
+          </Link>
+          <span className="text-xs font-semibold text-gray-500 bg-primary-50 text-primary-600 px-2.5 py-1 rounded-full">
+            Tracker
           </span>
-        </Link>
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
-        >
-          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        </div>
       </div>
 
-      {/* Mobile menu overlay */}
-      {mobileOpen && (
+      {/* ─── Mobile: bottom tab bar ─── */}
+      <nav className="bottom-nav md:hidden">
+        <div className="flex items-stretch h-16">
+          {primaryTabs.map(({ href, label, icon: Icon }) => {
+            const active = isActive(href);
+            return (
+              <Link
+                key={href}
+                href={href}
+                className="flex-1 flex flex-col items-center justify-center gap-0.5 transition-all duration-150 active:scale-95"
+              >
+                <div className={cn(
+                  "flex items-center justify-center w-10 h-6 rounded-full transition-all duration-200",
+                  active ? "bg-primary-100" : ""
+                )}>
+                  <Icon className={cn("w-5 h-5 transition-colors", active ? "text-primary-700" : "text-gray-500")} />
+                </div>
+                <span className={cn(
+                  "text-[10px] font-semibold leading-none transition-colors",
+                  active ? "text-primary-700" : "text-gray-500"
+                )}>
+                  {label}
+                </span>
+              </Link>
+            );
+          })}
+
+          {/* More button */}
+          <button
+            onClick={() => setMoreOpen(true)}
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 transition-all duration-150 active:scale-95"
+          >
+            <div className={cn(
+              "flex items-center justify-center w-10 h-6 rounded-full transition-all duration-200",
+              isMoreActive ? "bg-primary-100" : ""
+            )}>
+              <Grid3x3 className={cn("w-5 h-5 transition-colors", isMoreActive ? "text-primary-700" : "text-gray-500")} />
+            </div>
+            <span className={cn(
+              "text-[10px] font-semibold leading-none transition-colors",
+              isMoreActive ? "text-primary-700" : "text-gray-500"
+            )}>
+              More
+            </span>
+          </button>
+        </div>
+      </nav>
+
+      {/* ─── More sheet backdrop ─── */}
+      {moreOpen && (
         <div
-          className="md:hidden fixed inset-0 z-30 bg-black/20"
-          onClick={() => setMobileOpen(false)}
+          className="md:hidden fixed inset-0 z-50 bg-black/30 backdrop-blur-sm"
+          onClick={() => setMoreOpen(false)}
         />
       )}
 
-      {/* Mobile menu drawer */}
+      {/* ─── More sheet ─── */}
       <div
         className={cn(
-          "md:hidden fixed top-14 left-0 right-0 z-40 bg-white border-b border-gray-100 transition-all duration-200",
-          mobileOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"
+          "md:hidden fixed left-0 right-0 z-50 bg-white rounded-t-3xl transition-all duration-300",
+          moreOpen ? "bottom-0" : "-bottom-full"
         )}
+        style={{ boxShadow: "0 -8px 40px rgba(15,14,34,0.16)", paddingBottom: "calc(env(safe-area-inset-bottom) + 1rem)" }}
       >
-        <nav className="p-4 space-y-1">
-          {navItems.map(({ href, label, icon: Icon }) => (
+        {/* Sheet handle */}
+        <div className="flex justify-center pt-3 pb-4">
+          <div className="w-10 h-1 bg-gray-200 rounded-full" />
+        </div>
+
+        <div className="flex items-center justify-between px-5 pb-4">
+          <p className="font-bold text-[#0F0E22]" style={{ fontFamily: "Poppins, sans-serif" }}>More</p>
+          <button onClick={() => setMoreOpen(false)} className="p-1.5 rounded-xl hover:bg-gray-100 transition-colors">
+            <X className="w-5 h-5 text-gray-500" />
+          </button>
+        </div>
+
+        <div className="px-4 pb-2 space-y-1">
+          {moreItems.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}
               href={href}
-              onClick={() => setMobileOpen(false)}
+              onClick={() => setMoreOpen(false)}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all",
-                pathname === href
-                  ? "bg-primary-50 text-primary-700"
-                  : "text-gray-600 hover:bg-gray-50"
+                "flex items-center gap-4 px-4 py-3.5 rounded-2xl font-semibold text-sm transition-all",
+                isActive(href)
+                  ? "text-primary-700"
+                  : "text-gray-700 hover:bg-gray-50"
               )}
+              style={isActive(href) ? {
+                background: "linear-gradient(135deg, #EEEDF5, #E8F2EF)"
+              } : {}}
             >
-              <Icon className="w-4 h-4" />
+              <div className={cn(
+                "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0",
+                isActive(href) ? "bg-primary-100" : "bg-gray-100"
+              )}>
+                <Icon className={cn("w-5 h-5", isActive(href) ? "text-primary-600" : "text-gray-600")} />
+              </div>
               {label}
             </Link>
           ))}
+
           <button
             onClick={handleSignOut}
-            className="flex items-center gap-3 px-3 py-2.5 w-full rounded-xl text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all"
+            disabled={signingOut}
+            className="flex items-center gap-4 px-4 py-3.5 w-full rounded-2xl font-semibold text-sm text-red-600 hover:bg-red-50 transition-all"
           >
-            <LogOut className="w-4 h-4" />
-            Sign Out
+            <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center flex-shrink-0">
+              <LogOut className="w-5 h-5 text-red-500" />
+            </div>
+            {signingOut ? "Signing out…" : "Sign Out"}
           </button>
-        </nav>
+        </div>
       </div>
     </>
   );

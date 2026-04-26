@@ -18,6 +18,19 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        // Darken the default gray scale for better readability
+        gray: {
+          50:  "#f9fafb",
+          100: "#f3f4f6",
+          200: "#e5e7eb",
+          300: "#d1d5db",
+          400: "#6b7280",  // was #9ca3af — much darker
+          500: "#4b5563",  // was #6b7280 — much darker
+          600: "#374151",
+          700: "#1f2937",
+          800: "#111827",
+          900: "#0f172a",
+        },
         // Primary = Pause Sleep navy/indigo
         primary: {
           DEFAULT: "#1B1A44",
