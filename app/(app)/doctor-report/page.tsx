@@ -6,10 +6,93 @@ import { useUser } from "@/hooks/useUser";
 import { getLast30Days, average, identifyTriggers, formatDate } from "@/lib/utils";
 import { format, subDays } from "date-fns";
 import Button from "@/components/ui/Button";
-import { Printer, Download, FileText } from "lucide-react";
+import Image from "next/image";
+import { Printer, Download, FileText, CheckCircle2, AlertCircle, Info } from "lucide-react";
 
 function avg(nums: (number | null | undefined)[]) {
   return Math.round(average(nums) * 10) / 10;
+}
+
+function generateExecutiveSummary(stats: {
+  avgHotFlushes: number;
+  avgSleepQuality: number;
+  avgEnergy: number;
+  daysWithBrainFog: number;
+  daysLogged: number;
+  daysWithHighStress: number;
+}, triggers: { trigger: string; impact: number }[]) {
+  const lines: string[] = [];
+
+  if (stats.avgHotFlushes >= 8) {
+    lines.push(`Hot flush frequency is HIGH at ${stats.avgHotFlushes}/day average — consistent with significant vasomotor symptoms requiring clinical attention.`);
+  } else if (stats.avgHotFlushes >= 4) {
+    lines.push(`Hot flush frequency is MODERATE at ${stats.avgHotFlushes}/day average — affecting quality of life and warranting management review.`);
+  } else if (stats.avgHotFlushes > 0) {
+    lines.push(`Hot flush frequency is MILD at ${stats.avgHotFlushes}/day average — currently manageable.`);
+  }
+
+  if (stats.avgSleepQuality && stats.avgSleepQuality <= 4) {
+    lines.push(`Sleep quality is SIGNIFICANTLY IMPAIRED (avg ${stats.avgSleepQuality}/10) — this is impacting daytime function and wellbeing.`);
+  } else if (stats.avgSleepQuality && stats.avgSleepQuality <= 6) {
+    lines.push(`Sleep quality is MODERATELY AFFECTED (avg ${stats.avgSleepQuality}/10) — consider reviewing sleep hygiene and symptom management.`);
+  }
+
+  if (stats.daysWithBrainFog > stats.daysLogged * 0.5) {
+    lines.push(`Brain fog reported on ${stats.daysWithBrainFog} of ${stats.daysLogged} tracked days — cognitive symptoms are a significant concern.`);
+  }
+
+  const topTrigger = triggers.find((t) => t.impact > 1);
+  if (topTrigger) {
+    lines.push(`Data shows ${topTrigger.trigger.toLowerCase()} is associated with +${topTrigger.impact} additional hot flushes — lifestyle modification may provide relief.`);
+  }
+
+  if (lines.length === 0) {
+    lines.push("Symptom levels appear within a manageable range based on tracked data.");
+  }
+
+  return lines;
+}
+
+function generateDiscussionPoints(stats: {
+  avgHotFlushes: number;
+  avgSleepQuality: number;
+  avgEnergy: number;
+  daysWithBrainFog: number;
+  daysLogged: number;
+  avgNightSweats: number;
+}, triggers: { trigger: string; impact: number }[]): string[] {
+  const points: string[] = [];
+
+  if (stats.avgHotFlushes >= 6) {
+    points.push("Should I consider starting or adjusting HRT given my hot flush frequency?");
+  } else {
+    points.push("Are my current hot flush levels within normal range for my stage of menopause?");
+  }
+
+  if (stats.avgSleepQuality && stats.avgSleepQuality <= 5) {
+    points.push("My sleep quality is consistently poor — are there targeted treatments or strategies I should try?");
+  } else {
+    points.push("What can I do to further improve my sleep quality?");
+  }
+
+  const topTrigger = triggers.find((t) => t.impact > 0);
+  if (topTrigger) {
+    points.push(`My data shows ${topTrigger.trigger.toLowerCase()} worsens my symptoms — what's the best way to address this?`);
+  } else {
+    points.push("What lifestyle changes would have the most impact on my symptoms?");
+  }
+
+  if (stats.daysWithBrainFog > 5) {
+    points.push("I'm experiencing brain fog frequently — is this hormonal and how do I manage it?");
+  }
+
+  if (stats.avgNightSweats > 1) {
+    points.push(`I'm averaging ${stats.avgNightSweats} night sweats per night — can we address this specifically?`);
+  }
+
+  points.push("Based on my 30 days of data, what is the next step in my menopause management plan?");
+
+  return points.slice(0, 5);
 }
 
 const DEFAULT_QUESTIONS = [
@@ -24,7 +107,8 @@ export default function DoctorReportPage() {
   const { logs, loading } = useLogs();
   const { user } = useUser();
   const printRef = useRef<HTMLDivElement>(null);
-  const [questions, setQuestions] = useState(DEFAULT_QUESTIONS);
+  const [useSmartQuestions, setUseSmartQuestions] = useState(true);
+  const [customQuestions, setCustomQuestions] = useState(DEFAULT_QUESTIONS);
   const [editingQ, setEditingQ] = useState<number | null>(null);
 
   const last30 = getLast30Days(logs);
@@ -41,6 +125,10 @@ export default function DoctorReportPage() {
     daysWithBrainFog: last30.filter((l) => l.brain_fog).length,
     daysWithHighStress: last30.filter((l) => l.high_stress).length,
   };
+
+  const executiveSummary = generateExecutiveSummary(stats, triggers);
+  const smartQuestions = generateDiscussionPoints(stats, triggers);
+  const questions = useSmartQuestions ? smartQuestions : customQuestions;
 
   const dateRange = {
     from: format(subDays(new Date(), 30), "dd MMM yyyy"),
@@ -123,32 +211,84 @@ export default function DoctorReportPage() {
         className="bg-white rounded-2xl border border-gray-200 overflow-hidden"
         style={{ fontFamily: "Inter, sans-serif" }}
       >
-        {/* Report header */}
-        <div className="bg-primary-500 text-white px-8 py-6">
-          <div className="flex items-start justify-between">
-            <div>
-              <h2 className="text-xl font-bold mb-1">Menopause Symptom Report</h2>
-              <p className="text-primary-100 text-sm">
-                Generated by Pause Sleep Tracker — pausesleep.com.au
-              </p>
+        {/* Report header with Dr. Premila credentials */}
+        <div style={{ background: "linear-gradient(135deg, #1B1A44 0%, #2D2B5E 100%)" }} className="text-white px-8 py-7">
+          <div className="flex items-start justify-between flex-wrap gap-4">
+            <div className="flex items-center gap-4">
+              <Image
+                src="/pausesleep-logo.png"
+                alt="Pause Sleep"
+                width={52}
+                height={52}
+                className="rounded-xl flex-shrink-0"
+                style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}
+              />
+              <div>
+                <h2 className="text-xl font-bold">Menopause Symptom Report</h2>
+                <p className="text-primary-200 text-sm mt-0.5">
+                  Pause Sleep Tracker — pausesleep.com.au
+                </p>
+              </div>
             </div>
-            <div className="text-right text-sm text-primary-100">
-              <p>Period: {dateRange.from} — {dateRange.to}</p>
+            <div className="text-right text-sm text-primary-200">
+              <p className="font-medium text-white">Period: {dateRange.from} — {dateRange.to}</p>
               <p>Generated: {formatDate(new Date())}</p>
+              <p className="mt-1">{stats.daysLogged} days of data</p>
             </div>
           </div>
-          {user?.full_name && (
-            <div className="mt-4 pt-4 border-t border-primary-400">
-              <p className="text-sm font-medium">Patient: {user.full_name}</p>
+
+          {/* Patient + author */}
+          <div className="mt-5 pt-5 border-t border-white/20 flex flex-wrap gap-6 text-sm">
+            <div>
+              <p className="text-primary-300 text-xs font-semibold uppercase tracking-wide mb-1">Patient</p>
+              <p className="font-medium">{user?.full_name ?? "—"}</p>
+              {user?.date_of_birth && <p className="text-primary-200 text-xs mt-0.5">DOB: {user.date_of_birth}</p>}
             </div>
-          )}
+            <div>
+              <p className="text-primary-300 text-xs font-semibold uppercase tracking-wide mb-1">App Creator</p>
+              <p className="font-medium">Dr. Premila Hewage, MBBS FRACGP</p>
+              <p className="text-primary-200 text-xs mt-0.5">General Practitioner · Menopause Medicine</p>
+            </div>
+          </div>
         </div>
 
         <div className="p-8 space-y-8">
+
+          {/* Executive Summary */}
+          {executiveSummary.length > 0 && last30.length >= 5 && (
+            <section>
+              <h3 className="font-bold text-lg text-[#1B1A44] mb-4 pb-2 border-b-2 border-primary-100 flex items-center gap-2">
+                <Info className="w-5 h-5 text-primary-500" />
+                Clinical Interpretation
+              </h3>
+              <div className="bg-primary-50 rounded-2xl p-5 space-y-2.5">
+                {executiveSummary.map((line, i) => {
+                  const isHigh = line.includes("HIGH") || line.includes("SIGNIFICANTLY") || line.includes("significant");
+                  const isMod = line.includes("MODERATE") || line.includes("moderately");
+                  return (
+                    <div key={i} className="flex items-start gap-3">
+                      {isHigh ? (
+                        <AlertCircle className="w-4 h-4 text-coral-500 flex-shrink-0 mt-0.5" />
+                      ) : isMod ? (
+                        <AlertCircle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                      ) : (
+                        <CheckCircle2 className="w-4 h-4 text-teal-500 flex-shrink-0 mt-0.5" />
+                      )}
+                      <p className="text-sm text-primary-800 leading-relaxed">{line}</p>
+                    </div>
+                  );
+                })}
+                <p className="text-xs text-primary-400 pt-2 border-t border-primary-200 mt-2">
+                  This interpretation is generated from patient-reported data and should be reviewed in clinical context.
+                </p>
+              </div>
+            </section>
+          )}
+
           {/* Summary statistics */}
           <section>
             <h3 className="font-bold text-lg text-[#1B1A44] mb-4 pb-2 border-b border-gray-200">
-              Summary Statistics ({stats.daysLogged} days recorded)
+              Summary Statistics
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
@@ -191,9 +331,7 @@ export default function DoctorReportPage() {
                       <td className="text-center px-3 py-2.5 text-coral-600 font-medium">{t.avgWith}</td>
                       <td className="text-center px-3 py-2.5 text-teal-600 font-medium">{t.avgWithout}</td>
                       <td className="text-center px-3 py-2.5">
-                        <span
-                          className={`font-bold ${t.impact > 1 ? "text-coral-600" : "text-teal-600"}`}
-                        >
+                        <span className={`font-bold ${t.impact > 1 ? "text-coral-600" : "text-teal-600"}`}>
                           {t.impact > 0 ? "+" : ""}{t.impact}
                         </span>
                       </td>
@@ -255,31 +393,49 @@ export default function DoctorReportPage() {
 
           {/* Questions for GP */}
           <section>
-            <h3 className="font-bold text-lg text-[#1B1A44] mb-4 pb-2 border-b border-gray-200">
-              Questions for My Doctor
-            </h3>
+            <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-200">
+              <h3 className="font-bold text-lg text-[#1B1A44]">Questions for My Doctor</h3>
+              {last30.length >= 5 && (
+                <button
+                  onClick={() => setUseSmartQuestions(!useSmartQuestions)}
+                  className="text-xs font-semibold text-primary-600 hover:text-primary-700 no-print flex items-center gap-1"
+                >
+                  {useSmartQuestions ? "✏ Edit questions" : "✦ Use smart questions"}
+                </button>
+              )}
+            </div>
+
+            {useSmartQuestions && last30.length >= 5 ? (
+              <div className="bg-teal-50 rounded-xl p-4 mb-3 no-print">
+                <p className="text-xs font-semibold text-teal-700 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  Smart questions generated from your data
+                </p>
+              </div>
+            ) : null}
+
             <div className="space-y-2">
               {questions.map((q, i) => (
                 <div key={i} className="flex items-start gap-2 group">
                   <span className="w-5 h-5 bg-primary-100 text-primary-700 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
                     {i + 1}
                   </span>
-                  {editingQ === i ? (
+                  {!useSmartQuestions && editingQ === i ? (
                     <input
                       className="input text-sm flex-1 py-1"
                       value={q}
                       onChange={(e) => {
-                        const updated = [...questions];
+                        const updated = [...customQuestions];
                         updated[i] = e.target.value;
-                        setQuestions(updated);
+                        setCustomQuestions(updated);
                       }}
                       onBlur={() => setEditingQ(null)}
                       autoFocus
                     />
                   ) : (
                     <span
-                      className="text-sm text-gray-700 flex-1 cursor-text hover:text-primary-700 transition-colors no-print:cursor-pointer"
-                      onClick={() => setEditingQ(i)}
+                      className={`text-sm text-gray-700 flex-1 ${!useSmartQuestions ? "cursor-text hover:text-primary-700 transition-colors" : ""}`}
+                      onClick={() => !useSmartQuestions && setEditingQ(i)}
                     >
                       {q}
                     </span>
@@ -287,13 +443,30 @@ export default function DoctorReportPage() {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-gray-400 mt-3 no-print">Click any question to edit it.</p>
+            {!useSmartQuestions && <p className="text-xs text-gray-400 mt-3 no-print">Click any question to edit it.</p>}
           </section>
 
           {/* Footer */}
-          <div className="pt-6 border-t border-gray-200 text-xs text-gray-400 flex justify-between">
-            <p>Pause Sleep Menopause Tracker — tracker.pausesleep.com.au</p>
-            <p>© Dr. Premila Hewage</p>
+          <div className="pt-6 border-t border-gray-200">
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <div className="flex items-center gap-3">
+                <Image
+                  src="/pausesleep-logo.png"
+                  alt="Pause Sleep"
+                  width={32}
+                  height={32}
+                  className="rounded-lg opacity-60"
+                />
+                <div>
+                  <p className="text-xs text-gray-500 font-medium">Pause Sleep Menopause Tracker</p>
+                  <p className="text-xs text-gray-400">tracker.pausesleep.com.au</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-gray-500 font-medium">Created by Dr. Premila Hewage, MBBS FRACGP</p>
+                <p className="text-xs text-gray-400">© {new Date().getFullYear()} Pause Sleep · pausesleep.com.au</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

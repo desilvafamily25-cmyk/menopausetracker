@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { isDemoMode, setDemoMode } from "@/lib/demo-data";
 import { useUser } from "@/hooks/useUser";
@@ -12,7 +13,7 @@ import { useLogs } from "@/hooks/useLogs";
 import Card, { CardTitle } from "@/components/ui/Card";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
-import { CheckCircle, Download, AlertTriangle } from "lucide-react";
+import { CheckCircle, Download, AlertTriangle, Bell, BellOff } from "lucide-react";
 
 const profileSchema = z.object({
   full_name: z.string().min(2, "Name must be at least 2 characters"),
@@ -40,6 +41,27 @@ export default function SettingsPage() {
   const [passwordSaved, setPasswordSaved] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [notifPermission, setNotifPermission] = useState<NotificationPermission | "unsupported">("default");
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && "Notification" in window) {
+      setNotifPermission(Notification.permission);
+    } else {
+      setNotifPermission("unsupported");
+    }
+  }, []);
+
+  async function requestNotifications() {
+    if (typeof window === "undefined" || !("Notification" in window)) return;
+    const permission = await Notification.requestPermission();
+    setNotifPermission(permission);
+    if (permission === "granted") {
+      new Notification("Pause Sleep", {
+        body: "Daily reminders enabled! You'll be reminded to log each evening.",
+        icon: "/icons/icon-192.png",
+      });
+    }
+  }
 
   const {
     register: profileRegister,
@@ -194,6 +216,64 @@ export default function SettingsPage() {
           )}
           <Button type="submit" size="sm" loading={pwSubmitting}>Update Password</Button>
         </form>
+      </Card>
+
+      {/* Notifications */}
+      <Card>
+        <CardTitle className="mb-2 flex items-center gap-2">
+          <Bell className="w-4 h-4 text-primary-500" />
+          Daily Reminders
+        </CardTitle>
+        <p className="text-sm text-gray-500 mb-4">
+          Get a gentle evening reminder to log your symptoms. Consistency is key to great data.
+        </p>
+        {notifPermission === "unsupported" && (
+          <p className="text-sm text-gray-400">Notifications are not supported in this browser.</p>
+        )}
+        {notifPermission === "granted" && (
+          <div className="flex items-center gap-2 text-teal-700">
+            <CheckCircle className="w-4 h-4" />
+            <span className="text-sm font-medium">Reminders are enabled</span>
+          </div>
+        )}
+        {notifPermission === "denied" && (
+          <div className="flex items-center gap-2 text-gray-500">
+            <BellOff className="w-4 h-4" />
+            <span className="text-sm">Notifications blocked — enable in your browser settings to allow reminders.</span>
+          </div>
+        )}
+        {notifPermission === "default" && (
+          <Button variant="secondary" size="sm" onClick={requestNotifications} className="gap-2">
+            <Bell className="w-4 h-4" />
+            Enable Daily Reminder
+          </Button>
+        )}
+      </Card>
+
+      {/* Dr. Premila bio */}
+      <Card style={{ background: "linear-gradient(135deg, #F0EEF8 0%, #EBF2EF 100%)", border: "1px solid rgba(27,26,68,0.08)" }}>
+        <div className="flex items-start gap-4">
+          <Image
+            src="/pausesleep-logo.png"
+            alt="Dr. Premila Hewage"
+            width={56}
+            height={56}
+            className="rounded-2xl flex-shrink-0"
+            style={{ boxShadow: "0 4px 12px rgba(27,26,68,0.18)" }}
+          />
+          <div className="flex-1 min-w-0">
+            <p className="font-bold text-[#1B1A44]" style={{ fontFamily: "Poppins, sans-serif" }}>
+              Dr. Premila Hewage
+            </p>
+            <p className="text-xs text-primary-600 font-semibold mt-0.5">MBBS · FRACGP · Menopause Medicine</p>
+            <p className="text-sm text-gray-700 mt-2.5 leading-relaxed">
+              Dr. Premila is an Australian General Practitioner with a special interest in women&apos;s health and menopause management. She created Pause Sleep to give every woman the tools to understand her body and have more productive conversations with her GP.
+            </p>
+            <p className="text-xs text-gray-500 mt-2 italic">
+              &ldquo;Menopause is not a disease — it&apos;s a transition. With the right data and support, every woman can thrive through it.&rdquo;
+            </p>
+          </div>
+        </div>
       </Card>
 
       {/* Data export */}

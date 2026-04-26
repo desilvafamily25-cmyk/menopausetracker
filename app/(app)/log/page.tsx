@@ -207,6 +207,11 @@ export default function LogPage() {
   const isToday = currentDate === today();
   const existingLog = getLogForDate(currentDate);
 
+  const isHardDay =
+    watchedValues.hot_flushes_count >= 8 ||
+    watchedValues.mood === "terrible" ||
+    watchedValues.mood === "poor";
+
   return (
     <div className="max-w-2xl mx-auto">
       {/* Date nav */}
@@ -489,6 +494,22 @@ export default function LogPage() {
             </div>
           </div>
         </Card>
+
+        {/* Encouragement on hard days */}
+        {isHardDay && (
+          <div
+            className="rounded-2xl p-4 flex items-start gap-3"
+            style={{ background: "linear-gradient(135deg, #FFF0EE 0%, #FFE8E5 100%)", border: "1px solid rgba(212,103,90,0.2)" }}
+          >
+            <span className="text-2xl flex-shrink-0 mt-0.5">💙</span>
+            <div>
+              <p className="text-sm font-semibold text-rose-800">Tough day — that&apos;s okay</p>
+              <p className="text-sm text-rose-700 mt-0.5 leading-relaxed">
+                Recording difficult days matters most. Every log brings you closer to understanding your patterns and finding relief. You&apos;re doing the right thing.
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Notes */}
         <Card>

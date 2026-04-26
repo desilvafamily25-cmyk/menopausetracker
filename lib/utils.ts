@@ -67,6 +67,69 @@ export function moodToNumber(mood: string | null): number {
   return mood ? (map[mood] ?? 0) : 0;
 }
 
+export function getWeekComparison(logs: DailyLog[]) {
+  const thisWeek = logs.filter((l) => new Date(l.log_date) >= subDays(new Date(), 7));
+  const lastWeek = logs.filter((l) => {
+    const d = new Date(l.log_date);
+    return d >= subDays(new Date(), 14) && d < subDays(new Date(), 7);
+  });
+  const avgThis = average(thisWeek.map((l) => l.hot_flushes_count));
+  const avgLast = average(lastWeek.map((l) => l.hot_flushes_count));
+  const sleepThis = average(thisWeek.map((l) => l.sleep_quality));
+  const sleepLast = average(lastWeek.map((l) => l.sleep_quality));
+  return {
+    flushesThis: Math.round(avgThis * 10) / 10,
+    flushesLast: Math.round(avgLast * 10) / 10,
+    flushesChange: Math.round((avgThis - avgLast) * 10) / 10,
+    sleepThis: Math.round(sleepThis * 10) / 10,
+    sleepLast: Math.round(sleepLast * 10) / 10,
+    sleepChange: Math.round((sleepThis - sleepLast) * 10) / 10,
+    hasData: thisWeek.length >= 3 && lastWeek.length >= 3,
+  };
+}
+
+export function getMilestone(logs: DailyLog[]): { days: number; message: string } | null {
+  const count = logs.length;
+  if (count === 0) return null;
+  if (count >= 90) return { days: 90, message: "90 days! Your data is now clinically meaningful." };
+  if (count >= 60) return { days: 60, message: "60 days logged — you're building an incredible health record." };
+  if (count >= 30) return { days: 30, message: "30 days! Your GP report is now highly accurate." };
+  if (count >= 14) return { days: 14, message: "2 weeks of data — patterns are starting to emerge." };
+  if (count >= 7)  return { days: 7,  message: "First week complete — great start!" };
+  return null;
+}
+
+export function getTopInsight(logs: DailyLog[]): string | null {
+  if (logs.length < 7) return null;
+  const triggers = identifyTriggers(logs);
+  const top = triggers.find((t) => t.impact >= 1 && t.avgWith > 0);
+  if (!top) return null;
+  const pct = top.avgWithout > 0
+    ? Math.round(((top.avgWith - top.avgWithout) / top.avgWithout) * 100)
+    : null;
+  const label = top.trigger.toLowerCase();
+  if (pct && pct > 0) {
+    return `On days you have ${label}, you experience ${pct}% more hot flushes.`;
+  }
+  return `${top.trigger} appears to increase your hot flushes by ${top.impact} per day.`;
+}
+
+export const DR_TIPS = [
+  { tip: "Layering clothing makes it easier to manage hot flushes in public — a light cardigan you can remove quickly is your best friend.", category: "Practical" },
+  { tip: "Keeping a small fan at your bedside and a cool water spray can significantly reduce night sweat disruption.", category: "Sleep" },
+  { tip: "Even 20 minutes of daily walking has been shown in studies to reduce hot flush frequency by up to 15%.", category: "Exercise" },
+  { tip: "Alcohol — even one glass — can trigger hot flushes within hours. Try alcohol-free for 2 weeks and compare your data.", category: "Triggers" },
+  { tip: "The gap between your last log and your GP appointment matters. 30 consecutive days of data is the gold standard.", category: "Tracking" },
+  { tip: "Phytoestrogens in soy, flaxseed and chickpeas can mildly reduce symptoms for some women. Worth tracking if you add them.", category: "Nutrition" },
+  { tip: "Cognitive Behavioural Therapy (CBT) is now NICE-recommended for menopause — it works even when you can't take HRT.", category: "Mental Health" },
+  { tip: "Sleep quality matters more than hours. Going to bed and waking at the same time every day can improve your sleep score.", category: "Sleep" },
+];
+
+export function getTodaysTip() {
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+  return DR_TIPS[dayOfYear % DR_TIPS.length];
+}
+
 export function identifyTriggers(logs: DailyLog[]) {
   const triggers = ['alcohol_consumed', 'caffeine_after_2pm', 'spicy_food', 'high_stress'] as const;
   const results = triggers.map((trigger) => {
