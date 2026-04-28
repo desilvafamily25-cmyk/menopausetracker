@@ -27,9 +27,25 @@ export async function createCheckoutSession(
 ) {
   const s = getStripe();
 
-  const discountOptions = couponCode
-    ? { discounts: [{ coupon: couponCode }] }
-    : { allow_promotion_codes: true };
+  // Look up the promo code ID from the user-facing code string
+  let discountOptions: Record<string, unknown> = { allow_promotion_codes: true };
+
+  if (couponCode) {
+    try {
+      const promoCodes = await s.promotionCodes.list({
+        code: couponCode,
+        active: true,
+        limit: 1,
+      });
+      if (promoCodes.data.length > 0) {
+        discountOptions = {
+          discounts: [{ promotion_code: promoCodes.data[0].id }],
+        };
+      }
+    } catch (err) {
+      console.error("Promo code lookup failed, falling back:", err);
+    }
+  }
 
   const session = await s.checkout.sessions.create({
     payment_method_types: ['card'],
