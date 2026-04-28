@@ -22,12 +22,21 @@ export async function POST(request: Request) {
 
   const origin = request.headers.get("origin") || process.env.NEXT_PUBLIC_APP_URL!;
 
+  let couponCode: string | undefined;
+  try {
+    const body = await request.json();
+    couponCode = body.couponCode || undefined;
+  } catch {
+    // no body is fine
+  }
+
   try {
     const session = await createCheckoutSession(
       user.id,
       user.email!,
       `${origin}/api/stripe/success?session_id={CHECKOUT_SESSION_ID}`,
-      `${origin}/checkout?cancelled=true`
+      `${origin}/checkout?cancelled=true`,
+      couponCode
     );
 
     return NextResponse.json({ url: session.url });

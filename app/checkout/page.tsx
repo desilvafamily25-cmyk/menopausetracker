@@ -19,6 +19,8 @@ const included = [
 function CheckoutContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [coupon, setCoupon] = useState("");
+  const [showCoupon, setShowCoupon] = useState(false);
   const searchParams = useSearchParams();
   const cancelled = searchParams.get("cancelled");
 
@@ -27,7 +29,11 @@ function CheckoutContent() {
     setError("");
 
     try {
-      const res = await fetch("/api/stripe/checkout", { method: "POST" });
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ couponCode: coupon.trim() || undefined }),
+      });
       const data = await res.json();
 
       if (!res.ok) {
@@ -107,6 +113,39 @@ function CheckoutContent() {
               <p className="text-gray-400 text-sm">AUD · One-time payment</p>
             </div>
 
+            {/* Pilot / promo code */}
+            <div className="mb-4">
+              {!showCoupon ? (
+                <button
+                  type="button"
+                  onClick={() => setShowCoupon(true)}
+                  className="text-xs text-primary-500 hover:text-primary-700 font-semibold underline underline-offset-2 transition-colors"
+                >
+                  Have a pilot or promo code?
+                </button>
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Enter code"
+                    value={coupon}
+                    onChange={(e) => setCoupon(e.target.value.toUpperCase())}
+                    className="input flex-1 text-sm py-2"
+                    autoFocus
+                  />
+                  {coupon && (
+                    <button
+                      type="button"
+                      onClick={() => { setCoupon(""); setShowCoupon(false); }}
+                      className="text-xs text-gray-400 hover:text-gray-600 px-2"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-3 mb-4">
                 <p className="text-sm text-red-600">{error}</p>
@@ -120,7 +159,7 @@ function CheckoutContent() {
               size="lg"
               className="mb-4"
             >
-              Pay $37 AUD — Get Access
+              {coupon ? "Apply Code & Continue" : "Pay $37 AUD — Get Access"}
             </Button>
 
             <div className="flex items-center justify-center gap-2 text-xs text-gray-400 mb-4">

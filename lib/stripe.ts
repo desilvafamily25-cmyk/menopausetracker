@@ -18,38 +18,34 @@ export const stripe = new Proxy({} as Stripe, {
   },
 });
 
-export const STRIPE_PRICE_AUD = 3700; // $37.00 AUD in cents
-
 export async function createCheckoutSession(
   userId: string,
   userEmail: string,
   successUrl: string,
-  cancelUrl: string
+  cancelUrl: string,
+  couponCode?: string
 ) {
   const s = getStripe();
+
+  const discountOptions = couponCode
+    ? { discounts: [{ coupon: couponCode }] }
+    : { allow_promotion_codes: true };
+
   const session = await s.checkout.sessions.create({
     payment_method_types: ['card'],
     mode: 'payment',
     customer_email: userEmail,
     line_items: [
       {
-        price_data: {
-          currency: 'aud',
-          product_data: {
-            name: 'Pause Sleep — Menopause Symptom Tracker',
-            description:
-              'Lifetime access to your personal menopause symptom tracker. Track symptoms, identify triggers, and generate doctor-ready reports.',
-          },
-          unit_amount: STRIPE_PRICE_AUD,
-        },
+        price: process.env.STRIPE_PRICE_ID!,
         quantity: 1,
       },
     ],
     metadata: { userId },
     success_url: successUrl,
     cancel_url: cancelUrl,
-    allow_promotion_codes: true,
     billing_address_collection: 'auto',
+    ...discountOptions,
   });
 
   return session;
