@@ -37,22 +37,22 @@ import {
   Minus,
   PartyPopper,
 } from "lucide-react";
-// DashboardHero uses font-display (DM Serif Display) loaded via globals.css
+// DashboardHero uses font-display (Cormorant Garamond) loaded via globals.css
 
 const STAT_THEMES = {
   coral: {
-    card: "linear-gradient(145deg, #FDF3F1 0%, #FBF0EE 100%)",
-    border: "rgba(212,103,90,0.15)",
-    icon: "linear-gradient(135deg, #D4675A 0%, #C05548 100%)",
+    card: "linear-gradient(145deg, #FDF3F1 0%, #FCEFEA 100%)",
+    border: "rgba(201,95,86,0.15)",
+    icon: "linear-gradient(135deg, #A65F3E 0%, #C05548 100%)",
     value: "#B84035",
     label: "#C05548",
   },
   teal: {
-    card: "linear-gradient(145deg, #EDF5F2 0%, #E8F2EF 100%)",
-    border: "rgba(61,107,91,0.15)",
-    icon: "linear-gradient(135deg, #3D6B5B 0%, #2E5446 100%)",
+    card: "linear-gradient(145deg, #EDF5F2 0%, #F3F7F4 100%)",
+    border: "rgba(127,155,142,0.15)",
+    icon: "linear-gradient(135deg, #7F9B8E 0%, #2E5446 100%)",
     value: "#2E5446",
-    label: "#3D6B5B",
+    label: "#7F9B8E",
   },
   amber: {
     card: "linear-gradient(145deg, #FEF9EE 0%, #FDF5E4 100%)",
@@ -62,10 +62,10 @@ const STAT_THEMES = {
     label: "#B45309",
   },
   purple: {
-    card: "linear-gradient(145deg, #F0EEF8 0%, #ECEAF6 100%)",
-    border: "rgba(27,26,68,0.12)",
-    icon: "linear-gradient(135deg, #1B1A44 0%, #2D2C6E 100%)",
-    value: "#1B1A44",
+    card: "linear-gradient(145deg, #F8E7E1 0%, #F4DBCF 100%)",
+    border: "rgba(59,36,28,0.12)",
+    icon: "linear-gradient(135deg, #3B241C 0%, #A65F3E 100%)",
+    value: "#3B241C",
     label: "#3D3C7A",
   },
 };
@@ -87,7 +87,7 @@ function StatCard({
   return (
     <div
       className="rounded-2xl p-5 flex flex-col gap-3"
-      style={{ background: t.card, border: `1px solid ${t.border}`, boxShadow: "0 1px 3px rgba(15,14,34,0.04), 0 4px 16px rgba(15,14,34,0.05)" }}
+      style={{ background: t.card, border: `1px solid ${t.border}`, boxShadow: "0 1px 3px rgba(59,36,28,0.04), 0 4px 16px rgba(59,36,28,0.05)" }}
     >
       <div
         className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -96,7 +96,7 @@ function StatCard({
         <Icon className="w-4 h-4 text-white" />
       </div>
       <div>
-        <p className="text-2xl font-bold" style={{ color: t.value }}>{value}</p>
+        <p className="text-2xl font-bold font-mono" style={{ color: t.value }}>{value}</p>
         <p className="text-xs font-semibold mt-0.5" style={{ color: t.label }}>{label}</p>
         {sub && <p className="text-[11px] mt-0.5 opacity-70" style={{ color: t.label }}>{sub}</p>}
       </div>
@@ -113,15 +113,15 @@ function DashboardHero({ name, streak }: { name?: string; streak: number }) {
   return (
     <div
       className="relative overflow-hidden rounded-3xl px-6 py-7"
-      style={{ background: "linear-gradient(135deg, #1B1A44 0%, #2A2860 50%, #1E3D35 100%)" }}
+      style={{ background: "linear-gradient(135deg, #3B241C 0%, #A65F3E 50%, #7F9B8E 100%)" }}
     >
       {/* Organic blob shapes */}
       <div className="absolute -top-12 -right-12 w-56 h-56 rounded-full pointer-events-none"
-           style={{ background: "radial-gradient(circle, rgba(61,107,91,0.35) 0%, transparent 70%)" }} />
+           style={{ background: "radial-gradient(circle, rgba(127,155,142,0.35) 0%, transparent 70%)" }} />
       <div className="absolute -bottom-16 -left-10 w-64 h-64 rounded-full pointer-events-none"
-           style={{ background: "radial-gradient(circle, rgba(138,158,151,0.20) 0%, transparent 70%)" }} />
+           style={{ background: "radial-gradient(circle, rgba(185,181,160,0.20) 0%, transparent 70%)" }} />
       <div className="absolute top-4 right-24 w-32 h-32 rounded-full pointer-events-none"
-           style={{ background: "radial-gradient(circle, rgba(212,103,90,0.12) 0%, transparent 70%)" }} />
+           style={{ background: "radial-gradient(circle, rgba(201,95,86,0.12) 0%, transparent 70%)" }} />
 
       <div className="relative z-10">
         <p className="text-white/55 text-xs font-semibold uppercase tracking-widest mb-2">
@@ -200,7 +200,7 @@ function DashboardContent() {
       {/* Welcome banner (after signup) */}
       {showWelcome && (
         <div className="rounded-2xl p-4 flex items-center gap-3"
-             style={{ background: "linear-gradient(135deg, #EBF2EF 0%, #E5F0EC 100%)", border: "1px solid rgba(61,107,91,0.2)" }}>
+             style={{ background: "linear-gradient(135deg, #F3F7F4 0%, #E8EFE9 100%)", border: "1px solid rgba(127,155,142,0.2)" }}>
           <PartyPopper className="w-5 h-5 text-teal-600 flex-shrink-0" />
           <p className="text-sm font-semibold text-teal-800 flex-1">
             Welcome! Log your first symptoms — 30 days of data generates a powerful doctor report.
@@ -212,7 +212,7 @@ function DashboardContent() {
       {/* Log today CTA — only when not logged */}
       {!hasTodayLog && logs.length > 0 && (
         <div className="flex items-center justify-between bg-white/70 backdrop-blur-sm rounded-2xl px-4 py-3"
-             style={{ border: "1px solid rgba(27,26,68,0.08)" }}>
+             style={{ border: "1px solid rgba(59,36,28,0.08)" }}>
           <div className="flex items-center gap-2.5">
             <Calendar className="w-4 h-4 text-primary-500" />
             <p className="text-sm font-semibold text-primary-700">Today&apos;s log not done yet</p>
@@ -360,7 +360,7 @@ function DashboardContent() {
       {last30.length === 0 && (
         <div className="card text-center py-12">
           <p className="text-4xl mb-3">🌙</p>
-          <h3 className="font-semibold text-lg text-[#1B1A44] mb-2">Start your tracking journey</h3>
+          <h3 className="font-semibold text-lg text-[#3B241C] mb-2">Start your tracking journey</h3>
           <p className="text-gray-500 text-sm mb-5">
             Log your first day to begin seeing patterns and insights.
           </p>

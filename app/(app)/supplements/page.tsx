@@ -185,7 +185,7 @@ export default function SupplementsPage() {
         <>
           {active.length > 0 && (
             <div>
-              <h2 className="text-base font-semibold text-[#1B1A44] mb-3">Current Supplements</h2>
+              <h2 className="text-base font-semibold text-[#3B241C] mb-3">Current Supplements</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {active.map((s) => (
                   <Card key={s.id}>
@@ -195,7 +195,7 @@ export default function SupplementsPage() {
                           <div className="w-8 h-8 bg-teal-50 rounded-lg flex items-center justify-center">
                             <Leaf className="w-4 h-4 text-teal-500" />
                           </div>
-                          <h3 className="font-semibold text-[#1B1A44] text-sm">{s.supplement_name}</h3>
+                          <h3 className="font-semibold text-[#3B241C] text-sm">{s.supplement_name}</h3>
                         </div>
                         <div className="mt-2 space-y-0.5 pl-10">
                           {s.dose && <p className="text-xs text-gray-500">{s.dose}</p>}

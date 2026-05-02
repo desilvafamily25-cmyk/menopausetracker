@@ -155,7 +155,7 @@ export default function SettingsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs text-gray-400 mb-0.5">Signed in as</p>
-              <p className="font-medium text-[#1B1A44]">{user.email}</p>
+              <p className="font-medium text-[#3B241C]">{user.email}</p>
             </div>
             <span className="inline-flex items-center gap-1.5 bg-teal-100 text-teal-700 text-xs font-medium px-3 py-1.5 rounded-full">
               <CheckCircle className="w-3.5 h-3.5" />
@@ -251,7 +251,7 @@ export default function SettingsPage() {
       </Card>
 
       {/* Dr. Premila bio */}
-      <Card style={{ background: "linear-gradient(135deg, #F0EEF8 0%, #EBF2EF 100%)", border: "1px solid rgba(27,26,68,0.08)" }}>
+      <Card style={{ background: "linear-gradient(135deg, #F8E7E1 0%, #F3F7F4 100%)", border: "1px solid rgba(59,36,28,0.08)" }}>
         <div className="flex items-start gap-4">
           <Image
             src="/pausesleep-logo.png"
@@ -259,10 +259,10 @@ export default function SettingsPage() {
             width={56}
             height={56}
             className="rounded-2xl flex-shrink-0"
-            style={{ boxShadow: "0 4px 12px rgba(27,26,68,0.18)" }}
+            style={{ boxShadow: "0 4px 12px rgba(59,36,28,0.18)" }}
           />
           <div className="flex-1 min-w-0">
-            <p className="font-bold text-[#1B1A44]" style={{ fontFamily: "Poppins, sans-serif" }}>
+            <p className="font-bold text-[#3B241C]" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>
               Dr. Premila Hewage
             </p>
             <p className="text-xs text-primary-600 font-semibold mt-0.5">MBBS · FRACGP · Menopause Medicine</p>

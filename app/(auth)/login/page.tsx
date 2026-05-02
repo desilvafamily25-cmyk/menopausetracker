@@ -63,7 +63,7 @@ export default function LoginPage() {
     <div className="w-full max-w-md">
       <div className="card shadow-xl border-gray-100">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold text-[#1B1A44] mb-1" style={{ fontFamily: "Poppins, sans-serif" }}>
+          <h1 className="text-2xl font-bold text-[#3B241C] mb-1" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>
             Welcome back
           </h1>
           <p className="text-sm text-gray-500">Sign in to your symptom tracker</p>

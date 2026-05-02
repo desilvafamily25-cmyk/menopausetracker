@@ -62,11 +62,11 @@ function CheckoutContent() {
               height={52}
               className="rounded-full"
             />
-            <span className="font-bold text-xl text-[#1B1A44]" style={{ fontFamily: "Poppins, sans-serif" }}>
+            <span className="font-bold text-xl text-[#3B241C]" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>
               Pause Sleep
             </span>
           </div>
-          <h1 className="text-3xl font-bold text-[#1B1A44] mb-2" style={{ fontFamily: "Poppins, sans-serif" }}>
+          <h1 className="text-3xl font-bold text-[#3B241C] mb-2" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>
             Unlock Your Tracker
           </h1>
           <p className="text-gray-500">One payment. Lifetime access.</p>
@@ -81,7 +81,7 @@ function CheckoutContent() {
         <div className="grid md:grid-cols-2 gap-8">
           {/* What's included */}
           <div className="card">
-            <h2 className="text-lg font-semibold text-[#1B1A44] mb-5">What&apos;s included</h2>
+            <h2 className="text-lg font-semibold text-[#3B241C] mb-5">What&apos;s included</h2>
             <ul className="space-y-3">
               {included.map((item) => (
                 <li key={item} className="flex items-start gap-3">
@@ -107,7 +107,7 @@ function CheckoutContent() {
           {/* Payment card */}
           <div className="card flex flex-col">
             <div className="text-center mb-6">
-              <div className="text-5xl font-bold text-[#1B1A44] mb-1" style={{ fontFamily: "Poppins, sans-serif" }}>
+              <div className="text-5xl font-bold text-[#3B241C] mb-1" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>
                 $37
               </div>
               <p className="text-gray-400 text-sm">AUD · One-time payment</p>

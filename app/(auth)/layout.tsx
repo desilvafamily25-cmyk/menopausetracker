@@ -15,7 +15,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             height={40}
             className="rounded-full"
           />
-          <span className="font-semibold text-[#1B1A44]" style={{ fontFamily: "Poppins, sans-serif" }}>
+          <span className="font-semibold text-[#3B241C]" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>
             Pause Sleep
           </span>
         </Link>

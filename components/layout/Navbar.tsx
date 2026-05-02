@@ -74,14 +74,14 @@ export default function Navbar() {
       {/* ─── Desktop sidebar ─── */}
       <aside className="hidden md:flex flex-col fixed left-0 top-0 h-full w-64 z-30"
              style={{ background: "linear-gradient(180deg, #ffffff 0%, #faf9f7 100%)",
-                      borderRight: "1px solid rgba(15,14,34,0.07)",
-                      boxShadow: "2px 0 16px rgba(15,14,34,0.05)" }}>
+                      borderRight: "1px solid rgba(59,36,28,0.07)",
+                      boxShadow: "2px 0 16px rgba(59,36,28,0.05)" }}>
         {/* Logo */}
-        <div className="px-6 py-5" style={{ borderBottom: "1px solid rgba(15,14,34,0.07)" }}>
+        <div className="px-6 py-5" style={{ borderBottom: "1px solid rgba(59,36,28,0.07)" }}>
           <Link href="/dashboard" className="flex items-center gap-3">
-            <Image src="/pausesleep-logo.png" alt="Pause Sleep" width={46} height={46} className="rounded-full flex-shrink-0" style={{ boxShadow: "0 2px 8px rgba(27,26,68,0.18)" }} />
+            <Image src="/pausesleep-logo.png" alt="Pause Sleep" width={46} height={46} className="rounded-full flex-shrink-0" style={{ boxShadow: "0 2px 8px rgba(59,36,28,0.18)" }} />
             <div>
-              <p className="font-bold text-sm text-[#0F0E22]" style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "-0.01em" }}>
+              <p className="font-bold text-sm text-[#3B241C]" style={{ fontFamily: "Cormorant Garamond, sans-serif", letterSpacing: "-0.01em" }}>
                 Pause Sleep
               </p>
               <p className="text-xs text-gray-500 font-medium">Symptom Tracker</p>
@@ -102,8 +102,8 @@ export default function Navbar() {
                   : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               )}
               style={isActive(href) ? {
-                background: "linear-gradient(135deg, #EEEDF5, #E8F2EF)",
-                boxShadow: "inset 0 1px 2px rgba(27,26,68,0.06)"
+                background: "linear-gradient(135deg, #FCEFEA, #F3F7F4)",
+                boxShadow: "inset 0 1px 2px rgba(59,36,28,0.06)"
               } : {}}
             >
               <Icon className={cn("w-4 h-4 flex-shrink-0", isActive(href) ? "text-primary-600" : "text-gray-500")} />
@@ -113,7 +113,7 @@ export default function Navbar() {
         </nav>
 
         {/* Bottom */}
-        <div className="p-3 space-y-0.5" style={{ borderTop: "1px solid rgba(15,14,34,0.07)" }}>
+        <div className="p-3 space-y-0.5" style={{ borderTop: "1px solid rgba(59,36,28,0.07)" }}>
           <a
             href="https://www.pausesleep.com.au"
             target="_blank"
@@ -135,11 +135,11 @@ export default function Navbar() {
 
       {/* ─── Mobile: slim top bar ─── */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 glass"
-           style={{ borderBottom: "1px solid rgba(15,14,34,0.08)", paddingTop: "env(safe-area-inset-top)" }}>
+           style={{ borderBottom: "1px solid rgba(59,36,28,0.08)", paddingTop: "env(safe-area-inset-top)" }}>
         <div className="flex items-center justify-between px-4 py-3">
           <Link href="/dashboard" className="flex items-center gap-2.5">
-            <Image src="/pausesleep-logo.png" alt="Pause Sleep" width={32} height={32} className="rounded-full" style={{ boxShadow: "0 1px 6px rgba(27,26,68,0.18)" }} />
-            <span className="font-bold text-sm text-[#0F0E22]" style={{ fontFamily: "Poppins, sans-serif", letterSpacing: "-0.01em" }}>
+            <Image src="/pausesleep-logo.png" alt="Pause Sleep" width={32} height={32} className="rounded-full" style={{ boxShadow: "0 1px 6px rgba(59,36,28,0.18)" }} />
+            <span className="font-bold text-sm text-[#3B241C]" style={{ fontFamily: "Cormorant Garamond, sans-serif", letterSpacing: "-0.01em" }}>
               Pause Sleep
             </span>
           </Link>
@@ -227,7 +227,7 @@ export default function Navbar() {
           "md:hidden fixed left-0 right-0 z-50 bg-white rounded-t-3xl transition-all duration-300",
           moreOpen ? "bottom-0" : "-bottom-full"
         )}
-        style={{ boxShadow: "0 -8px 40px rgba(15,14,34,0.16)", paddingBottom: "calc(env(safe-area-inset-bottom) + 1rem)" }}
+        style={{ boxShadow: "0 -8px 40px rgba(59,36,28,0.16)", paddingBottom: "calc(env(safe-area-inset-bottom) + 1rem)" }}
       >
         {/* Sheet handle */}
         <div className="flex justify-center pt-3 pb-4">
@@ -235,7 +235,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center justify-between px-5 pb-4">
-          <p className="font-bold text-[#0F0E22]" style={{ fontFamily: "Poppins, sans-serif" }}>More</p>
+          <p className="font-bold text-[#3B241C]" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>More</p>
           <button onClick={() => setMoreOpen(false)} className="p-1.5 rounded-xl hover:bg-gray-100 transition-colors">
             <X className="w-5 h-5 text-gray-500" />
           </button>
@@ -254,7 +254,7 @@ export default function Navbar() {
                   : "text-gray-700 hover:bg-gray-50"
               )}
               style={isActive(href) ? {
-                background: "linear-gradient(135deg, #EEEDF5, #E8F2EF)"
+                background: "linear-gradient(135deg, #FCEFEA, #F3F7F4)"
               } : {}}
             >
               <div className={cn(

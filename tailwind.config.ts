@@ -1,10 +1,11 @@
 import type { Config } from "tailwindcss";
 
-// Pause Sleep brand colours — derived from logo
-// Navy/indigo: the main dark circle  #1B1A44
-// Forest teal: the wave accent       #3D6B5B
-// Sage:        muted background tone #8A9E97
-// Cream:       warm off-white        #F7F5F0
+// Pause Sleep brand colours
+// Cream:      warm page background      #FBF4EC
+// Brown:      warm readable foreground  #3B241C
+// Rose:       primary buttons/links     #C95F56
+// Terracotta: grounded accent           #A65F3E
+// Sage:       calm health support tone  #7F9B8E
 
 const config: Config = {
   content: [
@@ -31,67 +32,107 @@ const config: Config = {
           800: "#111827",
           900: "#0f172a",
         },
-        // Primary = Pause Sleep navy/indigo
+        cream: {
+          DEFAULT: "#FBF4EC",
+          50: "#FFFDFC",
+          100: "#FBF4EC",
+          200: "#F5E5D9",
+          300: "#ECD0BE",
+          400: "#DFAE94",
+          500: "#C98967",
+          600: "#A65F3E",
+          700: "#7C442D",
+          800: "#553023",
+          900: "#3B241C",
+        },
+        blush: {
+          DEFAULT: "#F8E7E1",
+          50: "#FFF8F5",
+          100: "#FCEFEA",
+          200: "#F8E7E1",
+          300: "#F0C8BE",
+          400: "#E3A196",
+          500: "#D57B72",
+          600: "#C95F56",
+          700: "#A94A42",
+          800: "#813830",
+          900: "#5D2922",
+        },
+        brown: {
+          DEFAULT: "#3B241C",
+          50: "#F8F1EC",
+          100: "#EDDCD2",
+          200: "#DABAA8",
+          300: "#C2967B",
+          400: "#A97756",
+          500: "#85583C",
+          600: "#67432F",
+          700: "#503326",
+          800: "#3B241C",
+          900: "#271712",
+        },
+        // Primary = soft rose/coral
         primary: {
-          DEFAULT: "#1B1A44",
-          50:  "#EEEDF5",
-          100: "#CCCAEB",
-          200: "#9B97D6",
-          300: "#6D69BE",
-          400: "#3F3BA6",
-          500: "#1B1A44",
-          600: "#161538",
-          700: "#10102A",
-          800: "#0B0A1C",
-          900: "#05050E",
+          DEFAULT: "#C95F56",
+          50:  "#FFF8F5",
+          100: "#FCEFEA",
+          200: "#F8DAD2",
+          300: "#EFB9AF",
+          400: "#DF8D83",
+          500: "#C95F56",
+          600: "#AC4941",
+          700: "#89382F",
+          800: "#632A23",
+          900: "#3B241C",
         },
-        // Teal = forest teal wave colour from logo
+        // Teal = softened sage-green support tone
         teal: {
-          DEFAULT: "#3D6B5B",
-          50:  "#EBF2EF",
-          100: "#C8DEDA",
-          200: "#9EC4BB",
-          300: "#74AB9B",
-          400: "#4A917C",
-          500: "#3D6B5B",
-          600: "#315649",
-          700: "#254037",
-          800: "#182B25",
-          900: "#0C1512",
+          DEFAULT: "#7F9B8E",
+          50:  "#F3F7F4",
+          100: "#E3EDE7",
+          200: "#C8DCCE",
+          300: "#A6C3B1",
+          400: "#7F9B8E",
+          500: "#668879",
+          600: "#4F6B5E",
+          700: "#3C5047",
+          800: "#2B3A34",
+          900: "#1B2722",
         },
-        // Sage = the muted grey-green from logo background
+        // Sage = quieter neutral panel tint
         sage: {
-          DEFAULT: "#8A9E97",
-          50:  "#F4F6F5",
-          100: "#E2EAE7",
-          200: "#C5D4CE",
-          300: "#A8BFB6",
-          400: "#8A9E97",
-          500: "#728E86",
-          600: "#5A7269",
-          700: "#43564E",
-          800: "#2C3934",
-          900: "#151C1A",
+          DEFAULT: "#B9B5A0",
+          50:  "#F8F6EF",
+          100: "#EFEBDD",
+          200: "#DDD6BE",
+          300: "#CBC19F",
+          400: "#B9B5A0",
+          500: "#9C9276",
+          600: "#7D735D",
+          700: "#5F5747",
+          800: "#433D32",
+          900: "#29251F",
         },
-        // Coral = warm call-to-action accent
+        // Coral = terracotta accent
         coral: {
-          DEFAULT: "#D4675A",
-          50:  "#FBF0EE",
-          100: "#F5D5D2",
-          200: "#ECADA7",
-          300: "#E2857C",
-          400: "#D4675A",
-          500: "#BF4E41",
-          600: "#993E34",
-          700: "#732E26",
-          800: "#4D1F19",
-          900: "#260F0C",
+          DEFAULT: "#A65F3E",
+          50:  "#FBF0EA",
+          100: "#F4DBCF",
+          200: "#E7B89E",
+          300: "#D38E67",
+          400: "#BE724C",
+          500: "#A65F3E",
+          600: "#884B31",
+          700: "#693925",
+          800: "#4C2B1E",
+          900: "#321C14",
         },
       },
       fontFamily: {
-        sans: ["Inter", "Open Sans", "sans-serif"],
-        heading: ["Poppins", "Inter", "sans-serif"],
-        display: ["DM Serif Display", "Georgia", "serif"],
+        sans: ["DM Sans", "Inter", "sans-serif"],
+        heading: ["Cormorant Garamond", "Georgia", "serif"],
+        display: ["Cormorant Garamond", "Georgia", "serif"],
+        mono: ["DM Mono", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       animation: {
         "fade-in": "fadeIn 0.5s ease-in-out",

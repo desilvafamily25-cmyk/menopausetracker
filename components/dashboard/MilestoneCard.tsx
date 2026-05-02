@@ -16,7 +16,7 @@ export default function MilestoneCard({ logs }: { logs: DailyLog[] }) {
 
   return (
     <div className="rounded-2xl p-4 flex items-center gap-3"
-         style={{ background: "linear-gradient(135deg, #E8F7F3 0%, #D1F0E8 100%)", border: "1px solid rgba(61,107,91,0.2)" }}>
+         style={{ background: "linear-gradient(135deg, #F3F7F4 0%, #E3EDE7 100%)", border: "1px solid rgba(127,155,142,0.2)" }}>
       <span className="text-3xl flex-shrink-0">{emoji}</span>
       <div className="flex-1 min-w-0">
         <p className="text-xs font-bold text-teal-700 uppercase tracking-widest">{milestone.days}-Day Milestone</p>

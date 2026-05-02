@@ -212,7 +212,7 @@ export default function DoctorReportPage() {
         style={{ fontFamily: "Inter, sans-serif" }}
       >
         {/* Report header with Dr. Premila credentials */}
-        <div style={{ background: "linear-gradient(135deg, #1B1A44 0%, #2D2B5E 100%)" }} className="text-white px-8 py-7">
+        <div style={{ background: "linear-gradient(135deg, #3B241C 0%, #2D2B5E 100%)" }} className="text-white px-8 py-7">
           <div className="flex items-start justify-between flex-wrap gap-4">
             <div className="flex items-center gap-4">
               <Image
@@ -257,7 +257,7 @@ export default function DoctorReportPage() {
           {/* Executive Summary */}
           {executiveSummary.length > 0 && last30.length >= 5 && (
             <section>
-              <h3 className="font-bold text-lg text-[#1B1A44] mb-4 pb-2 border-b-2 border-primary-100 flex items-center gap-2">
+              <h3 className="font-bold text-lg text-[#3B241C] mb-4 pb-2 border-b-2 border-primary-100 flex items-center gap-2">
                 <Info className="w-5 h-5 text-primary-500" />
                 Clinical Interpretation
               </h3>
@@ -287,7 +287,7 @@ export default function DoctorReportPage() {
 
           {/* Summary statistics */}
           <section>
-            <h3 className="font-bold text-lg text-[#1B1A44] mb-4 pb-2 border-b border-gray-200">
+            <h3 className="font-bold text-lg text-[#3B241C] mb-4 pb-2 border-b border-gray-200">
               Summary Statistics
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -312,7 +312,7 @@ export default function DoctorReportPage() {
           {/* Top triggers */}
           {triggers.length > 0 && (
             <section>
-              <h3 className="font-bold text-lg text-[#1B1A44] mb-4 pb-2 border-b border-gray-200">
+              <h3 className="font-bold text-lg text-[#3B241C] mb-4 pb-2 border-b border-gray-200">
                 Identified Triggers (Correlation Analysis)
               </h3>
               <table className="w-full text-sm">
@@ -344,7 +344,7 @@ export default function DoctorReportPage() {
 
           {/* Daily log table */}
           <section>
-            <h3 className="font-bold text-lg text-[#1B1A44] mb-4 pb-2 border-b border-gray-200">
+            <h3 className="font-bold text-lg text-[#3B241C] mb-4 pb-2 border-b border-gray-200">
               Daily Log Summary
             </h3>
             <div className="overflow-x-auto">
@@ -394,7 +394,7 @@ export default function DoctorReportPage() {
           {/* Questions for GP */}
           <section>
             <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-200">
-              <h3 className="font-bold text-lg text-[#1B1A44]">Questions for My Doctor</h3>
+              <h3 className="font-bold text-lg text-[#3B241C]">Questions for My Doctor</h3>
               {last30.length >= 5 && (
                 <button
                   onClick={() => setUseSmartQuestions(!useSmartQuestions)}

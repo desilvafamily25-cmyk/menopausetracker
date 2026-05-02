@@ -23,7 +23,7 @@ export default function Card({
   return (
     <div
       className={cn(
-        "bg-white rounded-2xl shadow-sm border border-gray-100",
+        "bg-white rounded-2xl shadow-sm border border-[#EDDCD2]/70",
         paddings[padding],
         hover && "transition-shadow hover:shadow-md cursor-pointer",
         className
@@ -45,7 +45,7 @@ export function CardHeader({ children, className, ...props }: HTMLAttributes<HTM
 
 export function CardTitle({ children, className, ...props }: HTMLAttributes<HTMLHeadingElement>) {
   return (
-    <h3 className={cn("text-lg font-semibold text-[#1B1A44]", className)} {...props}>
+    <h3 className={cn("text-lg font-semibold text-[#3B241C] font-heading", className)} {...props}>
       {children}
     </h3>
   );

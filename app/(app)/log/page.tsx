@@ -47,9 +47,9 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const SLIDER_FILL = {
-  coral:  { fill: "#D4675A", thumb: "#D4675A", badge: "bg-coral-50 text-coral-700" },
-  teal:   { fill: "#3D6B5B", thumb: "#3D6B5B", badge: "bg-teal-50 text-teal-700" },
-  purple: { fill: "#1B1A44", thumb: "#1B1A44", badge: "bg-primary-50 text-primary-700" },
+  coral:  { fill: "#A65F3E", thumb: "#A65F3E", badge: "bg-coral-50 text-coral-700" },
+  teal:   { fill: "#7F9B8E", thumb: "#7F9B8E", badge: "bg-teal-50 text-teal-700" },
+  purple: { fill: "#3B241C", thumb: "#3B241C", badge: "bg-primary-50 text-primary-700" },
 };
 
 function RangeSlider({
@@ -237,7 +237,7 @@ export default function LogPage() {
             <ChevronLeft className="w-4 h-4 text-gray-600" />
           </button>
           <div className="text-center px-2">
-            <p className="text-sm font-semibold text-[#1B1A44]">
+            <p className="text-sm font-semibold text-[#3B241C]">
               {format(parseISO(currentDate), "d MMM yyyy")}
             </p>
             {isToday && <p className="text-xs text-primary-500">Today</p>}
@@ -507,7 +507,7 @@ export default function LogPage() {
         {isHardDay && (
           <div
             className="rounded-2xl p-4 flex items-start gap-3"
-            style={{ background: "linear-gradient(135deg, #FFF0EE 0%, #FFE8E5 100%)", border: "1px solid rgba(212,103,90,0.2)" }}
+            style={{ background: "linear-gradient(135deg, #FFF8F5 0%, #F8E7E1 100%)", border: "1px solid rgba(201,95,86,0.2)" }}
           >
             <span className="text-2xl flex-shrink-0 mt-0.5">💙</span>
             <div>

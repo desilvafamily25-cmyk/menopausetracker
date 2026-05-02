@@ -82,7 +82,7 @@ export default function OnboardingPage() {
               className="rounded-2xl shadow-lg"
             />
             <div>
-              <h1 className="text-2xl font-bold text-[#1B1A44]" style={{ fontFamily: "Poppins, sans-serif" }}>
+              <h1 className="text-2xl font-bold text-[#3B241C]" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>
                 Welcome to Pause Sleep
               </h1>
               <p className="text-gray-500 mt-1 text-sm leading-relaxed">
@@ -129,7 +129,7 @@ export default function OnboardingPage() {
       {step === 2 && (
         <div className="animate-fade-in space-y-6">
           <div>
-            <h2 className="text-xl font-bold text-[#1B1A44]" style={{ fontFamily: "Poppins, sans-serif" }}>
+            <h2 className="text-xl font-bold text-[#3B241C]" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>
               Hi {name}! Which symptoms bother you most?
             </h2>
             <p className="text-sm text-gray-500 mt-1">
@@ -177,7 +177,7 @@ export default function OnboardingPage() {
       {step === 3 && (
         <div className="animate-fade-in space-y-6">
           <div>
-            <h2 className="text-xl font-bold text-[#1B1A44]" style={{ fontFamily: "Poppins, sans-serif" }}>
+            <h2 className="text-xl font-bold text-[#3B241C]" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>
               What do you want to achieve?
             </h2>
             <p className="text-sm text-gray-500 mt-1">
@@ -211,7 +211,7 @@ export default function OnboardingPage() {
           </div>
 
           {/* Dr. Premila message */}
-          <div className="card" style={{ background: "linear-gradient(135deg, #F0EEF8 0%, #EBF2EF 100%)", border: "1px solid rgba(27,26,68,0.08)" }}>
+          <div className="card" style={{ background: "linear-gradient(135deg, #F8E7E1 0%, #F3F7F4 100%)", border: "1px solid rgba(59,36,28,0.08)" }}>
             <div className="flex items-start gap-3">
               <Image
                 src="/pausesleep-logo.png"
@@ -221,7 +221,7 @@ export default function OnboardingPage() {
                 className="rounded-full flex-shrink-0"
               />
               <div>
-                <p className="text-xs font-bold text-primary-700" style={{ fontFamily: "Poppins, sans-serif" }}>Dr. Premila Hewage, GP</p>
+                <p className="text-xs font-bold text-primary-700" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>Dr. Premila Hewage, GP</p>
                 <p className="text-sm text-gray-700 mt-1 leading-relaxed">
                   &ldquo;Tracking just 30 days of symptoms gives us data that transforms a 10-minute GP visit. I&apos;m here to help you every step of the way.&rdquo;
                 </p>

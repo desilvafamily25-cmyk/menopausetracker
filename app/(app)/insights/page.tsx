@@ -37,7 +37,7 @@ function SummaryRow({ label, value, sub }: { label: string; value: string | numb
     <div className="flex items-center justify-between py-2.5 border-b border-gray-100 last:border-0">
       <span className="text-sm text-gray-600">{label}</span>
       <div className="text-right">
-        <span className="text-sm font-semibold text-[#1B1A44]">{value}</span>
+        <span className="text-sm font-semibold text-[#3B241C]">{value}</span>
         {sub && <p className="text-xs text-gray-400">{sub}</p>}
       </div>
     </div>
@@ -113,7 +113,7 @@ export default function InsightsPage() {
     return (
       <div className="text-center py-20">
         <p className="text-5xl mb-4">📊</p>
-        <h2 className="text-xl font-semibold text-[#1B1A44] mb-2">No data yet</h2>
+        <h2 className="text-xl font-semibold text-[#3B241C] mb-2">No data yet</h2>
         <p className="text-gray-500 text-sm">Start logging daily to unlock insights and patterns.</p>
       </div>
     );

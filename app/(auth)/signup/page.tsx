@@ -64,7 +64,7 @@ export default function SignupPage() {
           <div className="w-16 h-16 bg-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-teal-600" />
           </div>
-          <h1 className="text-2xl font-bold text-[#1B1A44] mb-2" style={{ fontFamily: "Poppins, sans-serif" }}>
+          <h1 className="text-2xl font-bold text-[#3B241C] mb-2" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>
             Check your email!
           </h1>
           <p className="text-gray-500 mb-6">
@@ -83,7 +83,7 @@ export default function SignupPage() {
     <div className="w-full max-w-md">
       <div className="card shadow-xl border-gray-100">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold text-[#1B1A44] mb-1" style={{ fontFamily: "Poppins, sans-serif" }}>
+          <h1 className="text-2xl font-bold text-[#3B241C] mb-1" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>
             Create your account
           </h1>
           <p className="text-sm text-gray-500">Start tracking your journey</p>

@@ -25,7 +25,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#1B1A44",
+  themeColor: "#3B241C",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
       </head>
-      <body className="antialiased min-h-screen bg-[#F7F5F0]">
+      <body className="antialiased min-h-screen bg-[#FBF4EC]">
         <PwaRegister />
         {children}
       </body>

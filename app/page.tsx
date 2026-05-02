@@ -43,7 +43,7 @@ const testimonials = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#F7F5F0]">
+    <div className="min-h-screen bg-[#FBF4EC]">
       {/* Header */}
       <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-100 px-4 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
@@ -55,7 +55,7 @@ export default function LandingPage() {
               height={40}
               className="rounded-full"
             />
-            <span className="font-semibold text-[#1B1A44]" style={{ fontFamily: "Poppins, sans-serif" }}>
+            <span className="font-semibold text-[#3B241C]" style={{ fontFamily: "Cormorant Garamond, Georgia, serif" }}>
               Pause Sleep
             </span>
           </div>
@@ -78,8 +78,8 @@ export default function LandingPage() {
             Created by Dr. Premila Hewage, GP
           </span>
           <h1
-            className="text-4xl md:text-6xl font-bold text-[#1B1A44] mb-6 leading-tight"
-            style={{ fontFamily: "Poppins, sans-serif" }}
+            className="text-4xl md:text-6xl font-bold text-[#3B241C] mb-6 leading-tight"
+            style={{ fontFamily: "Cormorant Garamond, Georgia, serif" }}
           >
             Take Control of Your{" "}
             <span className="bg-gradient-to-r from-primary-500 to-teal-500 bg-clip-text text-transparent">
@@ -114,8 +114,8 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <h2
-              className="text-3xl font-bold text-[#1B1A44] mb-3"
-              style={{ fontFamily: "Poppins, sans-serif" }}
+              className="text-3xl font-bold text-[#3B241C] mb-3"
+              style={{ fontFamily: "Cormorant Garamond, Georgia, serif" }}
             >
               Everything you need in one place
             </h2>
@@ -129,7 +129,7 @@ export default function LandingPage() {
                 <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary-100 transition-colors">
                   <Icon className="w-6 h-6 text-primary-500" />
                 </div>
-                <h3 className="font-semibold text-[#1B1A44] mb-2">{title}</h3>
+                <h3 className="font-semibold text-[#3B241C] mb-2">{title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
               </div>
             ))}
@@ -142,8 +142,8 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2
-              className="text-3xl font-bold text-[#1B1A44] mb-3"
-              style={{ fontFamily: "Poppins, sans-serif" }}
+              className="text-3xl font-bold text-[#3B241C] mb-3"
+              style={{ fontFamily: "Cormorant Garamond, Georgia, serif" }}
             >
               What you&apos;ll track
             </h2>
@@ -177,8 +177,8 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2
-              className="text-3xl font-bold text-[#1B1A44] mb-3"
-              style={{ fontFamily: "Poppins, sans-serif" }}
+              className="text-3xl font-bold text-[#3B241C] mb-3"
+              style={{ fontFamily: "Cormorant Garamond, Georgia, serif" }}
             >
               What patients say
             </h2>
@@ -204,7 +204,7 @@ export default function LandingPage() {
         <div className="max-w-2xl mx-auto text-center">
           <h2
             className="text-3xl font-bold text-white mb-4"
-            style={{ fontFamily: "Poppins, sans-serif" }}
+            style={{ fontFamily: "Cormorant Garamond, Georgia, serif" }}
           >
             Start your 30-day story today
           </h2>

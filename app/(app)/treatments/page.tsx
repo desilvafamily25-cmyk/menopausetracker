@@ -183,7 +183,7 @@ export default function TreatmentsPage() {
         <>
           {active.length > 0 && (
             <div>
-              <h2 className="text-base font-semibold text-[#1B1A44] mb-3">Active Treatments</h2>
+              <h2 className="text-base font-semibold text-[#3B241C] mb-3">Active Treatments</h2>
               <div className="space-y-4">
                 {active.map((t) => {
                   const m = getMetrics(t);
@@ -191,7 +191,7 @@ export default function TreatmentsPage() {
                     <Card key={t.id}>
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <h3 className="font-semibold text-[#1B1A44]">{t.treatment_name}</h3>
+                          <h3 className="font-semibold text-[#3B241C]">{t.treatment_name}</h3>
                           {t.dose && <p className="text-sm text-gray-500">{t.dose}</p>}
                           <p className="text-xs text-gray-400 mt-0.5">
                             Started {format(parseISO(t.start_date), "dd MMM yyyy")} · {m.daysOn} days
@@ -263,7 +263,7 @@ export default function TreatmentsPage() {
                   <Card key={t.id} className="opacity-70">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-medium text-[#1B1A44]">{t.treatment_name}</h3>
+                        <h3 className="font-medium text-[#3B241C]">{t.treatment_name}</h3>
                         {t.dose && <p className="text-xs text-gray-500">{t.dose}</p>}
                       </div>
                       <p className="text-xs text-gray-400">

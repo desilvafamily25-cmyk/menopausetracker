@@ -64,13 +64,13 @@ export default function QuickLog({ onSaved }: { onSaved?: () => void }) {
   }
 
   return (
-    <div className="card" style={{ background: "linear-gradient(135deg, #EEEDF5 0%, #E8F2EF 100%)", border: "1px solid rgba(27,26,68,0.08)" }}>
+    <div className="card" style={{ background: "linear-gradient(135deg, #FCEFEA 0%, #F3F7F4 100%)", border: "1px solid rgba(59,36,28,0.08)" }}>
       <div className="flex items-center gap-2 mb-4">
         <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
           <Zap className="w-4 h-4 text-white" />
         </div>
         <div>
-          <p className="font-bold text-sm text-[#0F0E22]" style={{ fontFamily: "Poppins, sans-serif" }}>Quick Log Today</p>
+          <p className="font-bold text-sm text-[#3B241C]" style={{ fontFamily: "Cormorant Garamond, sans-serif" }}>Quick Log Today</p>
           <p className="text-xs text-gray-600">30 seconds · 3 taps</p>
         </div>
       </div>
